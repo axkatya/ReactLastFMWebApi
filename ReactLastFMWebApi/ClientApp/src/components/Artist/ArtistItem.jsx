@@ -5,8 +5,8 @@ import TrackList from "../Track/TrackList";
 
 interface Props {
   entry: Artist;
-  topAlbums?: Album[];
-  topTracks?: Track[];
+  topAlbums?: Album[] | undefined;
+  topTracks?: Track[] | undefined;
 }
 
 class ArtistItem extends Component<Props> {

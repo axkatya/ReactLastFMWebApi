@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ReactLastFMWebApi.Pages
+namespace WebApp2.Pages
 {
     public class ErrorModel : PageModel
     {

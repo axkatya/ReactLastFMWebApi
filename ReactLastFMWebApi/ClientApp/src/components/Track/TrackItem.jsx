@@ -6,7 +6,6 @@ interface Props {
   entry: Track;
 }
 
-
 class TrackItem extends Component<Props> {
   props: Props;
 

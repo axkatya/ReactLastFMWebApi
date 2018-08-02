@@ -1,28 +1,16 @@
-import './index.css';
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import {
-  Route,
-  NavLink,
-  Switch,
-  Redirect,
-  BrowserRouter as Router
-} from 'react-router-dom';
-
-import registerServiceWorker from './registerServiceWorker';
+import React, { Component } from 'react';
+import { NavLink, Switch, Redirect, Route } from 'react-router-dom';
 import AlbumSearch from "./components/Album/AlbumSearch";
 import ArtistSearch from "./components/Artist/ArtistSearch";
 
-const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
-const rootElement = document.getElementById('root');
+export default class App extends Component {
+  displayName = App.name
 
-ReactDOM.render(
-  <div>
-
-    <h1>Last FM</h1>
-
-    <Router basename={baseUrl}>
+  render() {
+    return (
       <div>
+        <h1>Last FM</h1>
+
         <div className="container__tabmenu tablist">
           <NavLink className="tablist__item" activeClassName="tablist__item--active" to="/albums">Albums</NavLink >
           <NavLink className="tablist__item" activeClassName="tablist__item--active" to="/artists">Artists</NavLink >
@@ -35,9 +23,6 @@ ReactDOM.render(
           <Redirect to="/" />
         </Switch>
       </div>
-    </Router>
-  </div>,
-
-  rootElement);
-
-
+    );
+  }
+}
