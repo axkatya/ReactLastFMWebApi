@@ -1,6 +1,7 @@
 import { Component } from "react";
 import * as React from 'react';
 import ArtistItem from "./ArtistItem";
+import { API_ROOT } from './../../api-config';
 
 interface State {
   artist?: Artist;
@@ -41,7 +42,7 @@ class ArtistSearch extends Component<Props, State> {
 	}
 
   getArtist(artistNameSearch: string) {
-    fetch('https://localhost:44334/api/artist/' + artistNameSearch)
+    fetch(API_ROOT + '/api/artist/'+artistNameSearch)
       .then(res => res.json())
       .then(artist => this.setState({ artist: artist })
       );
@@ -56,7 +57,7 @@ class ArtistSearch extends Component<Props, State> {
 	}
 
   getTopTracks(artistNameSearch: string) {
-    fetch('https://localhost:44334/api/toptrack/' + artistNameSearch)
+    fetch(API_ROOT + '/api/toptrack/' + artistNameSearch)
       .then(res => res.json())
       .then(topTracks => this.setState({ topTracks: topTracks })
       );
@@ -71,7 +72,7 @@ class ArtistSearch extends Component<Props, State> {
   }
 
   getTopAlbums(artistNameSearch: string) {
-    fetch('https://localhost:44334/api/topalbum/' + artistNameSearch)
+    fetch(API_ROOT + '/api/topalbum/' + artistNameSearch)
       .then(res => res.json())
       .then(topAlbums => this.setState({ topAlbums: topAlbums })
       );

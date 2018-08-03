@@ -1,6 +1,7 @@
 import { Component } from "react";
 import * as React from 'react';
 import AlbumList from "./AlbumList";
+import { API_ROOT } from './../../api-config';
 
 class AlbumSearch extends Component<any, any> {
   inputElement: any;
@@ -18,7 +19,7 @@ class AlbumSearch extends Component<any, any> {
   searchAlbum(event: any): void {
 
     if (this.inputElement.value !== "") {
-      fetch('https://localhost:44334/api/album/' + this.inputElement.value)
+      fetch(API_ROOT + '/api/album/' + this.inputElement.value)
         .then(res => res.json())
         .then(albums => this.setState({ albums: albums })
         );
