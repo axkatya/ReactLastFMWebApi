@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using ReactLastFMWebApi.Models;
-using System.Net.Http;
-using System.Net.Http.Headers;
+﻿using ReactLastFMWebApi.Models;
+using Microsoft.AspNetCore.Mvc;
+using ServiceAgent;
 using System.Threading.Tasks;
 
 namespace ReactLastFMWebApi.Controllers
@@ -10,23 +8,23 @@ namespace ReactLastFMWebApi.Controllers
 	[Route("api/[controller]")]
 	public class ArtistController : Controller
 	{
-		[HttpGet("{artistName}")]
-		public async Task<Artist> Get(string artistName)
-		{
-			HttpClient client = new HttpClient();
-			client.DefaultRequestHeaders.Accept.Clear();
-			client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-			client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
+		ILastFmServiceAgent _lastFmServiceAgent;
 
-			var response = await client.GetStringAsync("http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=" + artistName + "&api_key=91c70ecd632c37f12855243d9526cc6f&format=json");
-			ArtistSearchByNameResponse result = JsonConvert.DeserializeObject<ArtistSearchByNameResponse>(response);
-			if (result != null)
+		public ArtistController(ILastFmServiceAgent serviceAgent)
+		{
+			_lastFmServiceAgent = serviceAgent;
+		}
+
+		[HttpGet("{artistName}")]
+		public async Task<IActionResult> Get(string artistName)
+		{
+			var response = await _lastFmServiceAgent.GetArtist(artistName);
+			if (response != null)
 			{
-				Artist artist = result.Artist;
-				return artist;
+				return Ok(response);
 			}
 
-			return new Artist();
+			return Ok(new Artist());
 		}
 	}
 }
