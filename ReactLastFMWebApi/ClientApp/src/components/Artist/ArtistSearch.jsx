@@ -24,8 +24,12 @@ class ArtistSearch extends Component<Props, State> {
     this.searchArtist = this.searchArtist.bind(this);
 
 
-    var slashPosition = this.props.location.pathname.lastIndexOf('/');
-    var artistName = this.props.location.pathname.substring(slashPosition + 1);
+    var slashPosition = this.props.location.pathname.lastIndexOf('artists/');
+    var artistName = null;
+    if (slashPosition > 0) {
+      artistName = this.props.location.pathname.substring(slashPosition + 8);
+    }
+
 
     if (artistName != null && artistName.length > 0) {
 
