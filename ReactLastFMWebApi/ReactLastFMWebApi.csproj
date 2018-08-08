@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
@@ -18,20 +19,59 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
-    <Compile Remove="wwwroot\**" />
     <Content Remove="$(SpaRoot)**" />
-    <Content Remove="wwwroot\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Remove="wwwroot\**" />
-    <None Remove="wwwroot\**" />
+    <Content Remove="package-lock.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\api-config.tsx" />
+    <None Remove="ClientApp\components\Album\Album.tsx" />
+    <None Remove="ClientApp\components\Album\AlbumItem.tsx" />
+    <None Remove="ClientApp\components\Album\AlbumList.tsx" />
+    <None Remove="ClientApp\components\Album\AlbumSearch.tsx" />
+    <None Remove="ClientApp\components\Artist\Artist.tsx" />
+    <None Remove="ClientApp\components\Artist\ArtistItem.tsx" />
+    <None Remove="ClientApp\components\Artist\ArtistSearch.tsx" />
+    <None Remove="ClientApp\components\Artist\Bio.tsx" />
+    <None Remove="ClientApp\components\Track\TrackItem.tsx" />
+    <None Remove="ClientApp\components\Track\TrackList.tsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="webpack.config.js" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Entities\Entities.csproj" />
     <ProjectReference Include="..\LastFmServiceAgent\ServiceAgent.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="package.json" />
+    <None Include="tsconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\api-config.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Album\Album.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Album\AlbumItem.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Album\AlbumList.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Album\AlbumSearch.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Artist\Artist.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Artist\ArtistItem.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Artist\ArtistSearch.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Artist\Bio.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Track\TrackItem.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Track\TrackList.tsx" />
+    <TypeScriptCompile Include="ClientApp\boot.tsx" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
@@ -44,19 +84,34 @@
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
   </Target>
 
-  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
-    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
+ <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
+  <!-- Ensure Node.js is installed -->
+  <Exec Command="node --version" ContinueOnError="true">
+    <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+  </Exec>
+  <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
 
-    <!-- Include the newly-built files in the publish output -->
-    <ItemGroup>
-      <DistFiles Include="$(SpaRoot)build\**" />
-      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
-        <RelativePath>%(DistFiles.Identity)</RelativePath>
-        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      </ResolvedFileToPublish>
-    </ItemGroup>
-  </Target>
+  <!-- In development, the dist files won't exist on the first run or when cloning to
+        a different machine, so rebuild them if not already present. -->
+  <Message Importance="high" Text="Performing first-run Webpack build..." />
+  <Exec Command="node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js" />
+  <Exec Command="node node_modules/webpack/bin/webpack.js" />
+</Target>
+
+<Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+  <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+  <Exec Command="npm install" />
+  <Exec Command="node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --env.prod" />
+  <Exec Command="node node_modules/webpack/bin/webpack.js --env.prod" />
+
+  <!-- Include the newly-built files in the publish output -->
+  <ItemGroup>
+    <DistFiles Include="wwwroot\dist\**; ClientApp\dist\**" />
+    <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+      <RelativePath>%(DistFiles.Identity)</RelativePath>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </ResolvedFileToPublish>
+  </ItemGroup>
+</Target>
 
 </Project>
