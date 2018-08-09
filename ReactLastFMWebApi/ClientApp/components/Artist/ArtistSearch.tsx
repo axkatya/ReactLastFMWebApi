@@ -16,17 +16,17 @@ export class ArtistSearch extends React.Component<any, State> {
   setInputElement: (element: any) => void;
   inputElement: any;
 
-	constructor(props: any) {
-		super(props);
+  constructor(props: any) {
+    super(props);
     this.searchArtist = this.searchArtist.bind(this);
 
-
-    var slashPosition = this.props.location.pathname.lastIndexOf('artists/');
-    var artistName = null;
-    if (slashPosition > 0) {
-      artistName = this.props.location.pathname.substring(slashPosition + 8);
+    if (this.props.location != undefined) {
+      var slashPosition = this.props.location.pathname.lastIndexOf('artists/');
+      var artistName = null;
+      if (slashPosition > 0) {
+        artistName = this.props.location.pathname.substring(slashPosition + 8);
+      }
     }
-
 
     if (artistName != null && artistName.length > 0) {
 
@@ -40,14 +40,14 @@ export class ArtistSearch extends React.Component<any, State> {
       this.inputElement = element;
     };
 
-	}
+  }
 
   getArtist(artistNameSearch: string) {
-    fetch(API_ROOT + '/api/artist/'+artistNameSearch)
+    fetch(API_ROOT + '/api/artist/' + artistNameSearch)
       .then(res => res.json())
       .then(artist => this.setState({ artist: artist })
       );
-	}
+  }
 
   getTopTracks(artistNameSearch: string) {
     fetch(API_ROOT + '/api/toptrack/' + artistNameSearch)
@@ -63,51 +63,51 @@ export class ArtistSearch extends React.Component<any, State> {
       );
   }
 
-	searchArtist(event: any): void {
+  searchArtist(event: any): void {
 
-		if (this.inputElement.value !== "") {
+    if (this.inputElement.value !== "") {
       this.getArtist(this.inputElement.value);
       this.getTopAlbums(this.inputElement.value);
-		  this.getTopTracks(this.inputElement.value);
-		}
+      this.getTopTracks(this.inputElement.value);
+    }
 
-		event.preventDefault();
-	}
+    event.preventDefault();
+  }
 
-	addArtist(state: State) {
+  addArtist(state: State) {
     if (state != null && state.artist != null) {
 
       if (state.topAlbums != null && state.topTracks != null && state.topAlbums != undefined && state.topTracks != undefined) {
-        return <ArtistItem entry={state.artist} topAlbums={state.topAlbums} topTracks={state.topTracks}/>;
+        return <ArtistItem entry={state.artist} topAlbums={state.topAlbums} topTracks={state.topTracks} />;
       } else if (state.topAlbums != null && state.topAlbums != undefined) {
-        return <ArtistItem entry={state.artist} topAlbums={state.topAlbums} topTracks={undefined}/>;
+        return <ArtistItem entry={state.artist} topAlbums={state.topAlbums} topTracks={undefined} />;
       } else if (state.topTracks != null && state.topTracks != undefined) {
         return <ArtistItem entry={state.artist} topAlbums={undefined} topTracks={state.topTracks} />;
-      } else{
-        return <ArtistItem entry={state.artist} topAlbums={undefined} topTracks={undefined}/>;
+      } else {
+        return <ArtistItem entry={state.artist} topAlbums={undefined} topTracks={undefined} />;
       }
-		}
-		return null;
-	}
+    }
+    return null;
+  }
 
-	render() {
-		var artist = this.addArtist(this.state);
-		return (
+  render() {
+    var artist = this.addArtist(this.state);
+    return (
       <div className="container__search">
-				Artists
+        Artists
 				<div>
-					<form onSubmit={this.searchArtist}>
-						<input ref={this.setInputElement} placeholder="enter artist name">
+          <form onSubmit={this.searchArtist}>
+            <input ref={this.setInputElement} placeholder="enter artist name">
             </input>
 
             <button className="btn" type="submit">Search Artist</button>
-					</form>
+          </form>
         </div>
 
-				{artist}
+        {artist}
 
-			</div>
-		);
-	}
+      </div>
+    );
+  }
 }
 
