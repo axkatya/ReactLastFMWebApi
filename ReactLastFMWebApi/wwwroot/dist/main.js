@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "556a3dabb19309b03f88"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b74e7bed23726f943ac4"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1455,8 +1455,7 @@ exports.routes = React.createElement(Layout_1.Layout, null,
     React.createElement(react_router_dom_1.Route, { exact: true, path: "/", component: AlbumSearch_1.AlbumSearch }),
     React.createElement(react_router_dom_1.Route, { path: "/albums", component: AlbumSearch_1.AlbumSearch }),
     React.createElement(react_router_dom_1.Route, { path: "/artists", component: ArtistSearch_1.ArtistSearch }),
-    React.createElement(react_router_dom_1.Route, { path: "/artists(/:artistName)", component: ArtistSearch_1.ArtistSearch }),
-    React.createElement(react_router_dom_1.Redirect, { to: "/" }));
+    React.createElement(react_router_dom_1.Route, { path: "/artists(/:artistName)", component: ArtistSearch_1.ArtistSearch }));
 
 
  ;(function register() { /* react-hot-loader/webpack */ if (true) { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "D:\\Projects\\Examples\\ReactLastFMWebApi\\ReactLastFMWebApi\\ClientApp\\routes.tsx"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "D:\\Projects\\Examples\\ReactLastFMWebApi\\ReactLastFMWebApi\\ClientApp\\routes.tsx"); } } })();
@@ -7878,8 +7877,8 @@ var AlbumSearch = (function (_super) {
                 "Albums",
                 React.createElement("div", null,
                     React.createElement("form", { onSubmit: this.searchAlbum },
-                        React.createElement("input", { ref: function (a) { return _this.inputElement = a; }, placeholder: "enter album name" }),
-                        React.createElement("button", { className: "btn", type: "submit" }, "Search Album")))),
+                        React.createElement("input", { id: "lblAlbumNameSearch", ref: function (a) { return _this.inputElement = a; }, placeholder: "enter album name" }),
+                        React.createElement("button", { id: "btnAlbumNameSearch", className: "btn", type: "submit" }, "Search Album")))),
             React.createElement(AlbumList_1.AlbumList, { entries: this.state.albums })));
     };
     return AlbumSearch;
@@ -8052,8 +8051,8 @@ var ArtistSearch = (function (_super) {
             "Artists",
             React.createElement("div", null,
                 React.createElement("form", { onSubmit: this.searchArtist },
-                    React.createElement("input", { ref: this.setInputElement, placeholder: "enter artist name" }),
-                    React.createElement("button", { className: "btn", type: "submit" }, "Search Artist"))),
+                    React.createElement("input", { id: "lblArtistNameSearch", ref: this.setInputElement, placeholder: "enter artist name" }),
+                    React.createElement("button", { id: "btnArtistNameSearch", className: "btn", type: "submit" }, "Search Artist"))),
             artist));
     };
     return ArtistSearch;

@@ -18,7 +18,8 @@
     "moduleFileExtensions": [
       "ts",
       "tsx",
-      "js"
+      "js",
+      "json"
     ],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
@@ -47,6 +48,7 @@
     "babel-preset-react": "^6.24.1",
     "bootstrap": "3.3.7",
     "css-loader": "0.28.4",
+    "cypress": "^3.1.0",
     "enzyme": "^3.4.1",
     "enzyme-adapter-react-15": "^1.0.6",
     "event-source-polyfill": "0.0.9",
@@ -73,6 +75,7 @@
   },
   "scripts": {
     "test": "jest",
-    "postinstall": "typings install"
+    "postinstall": "typings install",
+    "cypress:open": "cypress open"
   }
 }

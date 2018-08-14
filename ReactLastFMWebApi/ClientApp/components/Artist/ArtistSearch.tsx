@@ -97,10 +97,9 @@ export class ArtistSearch extends React.Component<any, State> {
         Artists
 				<div>
           <form onSubmit={this.searchArtist}>
-            <input ref={this.setInputElement} placeholder="enter artist name">
-            </input>
+            <input id="lblArtistNameSearch" ref={this.setInputElement} placeholder="enter artist name"></input>
 
-            <button className="btn" type="submit">Search Artist</button>
+            <button id="btnArtistNameSearch" className="btn" type="submit">Search Artist</button>
           </form>
         </div>
 

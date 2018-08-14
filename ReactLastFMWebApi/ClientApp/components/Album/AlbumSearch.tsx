@@ -34,10 +34,10 @@ export class  AlbumSearch extends React.Component<any, any> {
           Albums
 				<div>
             <form onSubmit={this.searchAlbum}>
-              <input ref={(a: any) => this.inputElement = a}
+              <input id="lblAlbumNameSearch" ref={(a: any) => this.inputElement = a}
                 placeholder="enter album name">
               </input>
-              <button className="btn" type="submit">Search Album</button>
+              <button id="btnAlbumNameSearch" className="btn" type="submit">Search Album</button>
             </form>
           </div>
         </div>

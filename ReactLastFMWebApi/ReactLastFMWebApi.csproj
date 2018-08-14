@@ -39,6 +39,10 @@
     <None Remove="ClientApp\components\Artist\Bio.tsx" />
     <None Remove="ClientApp\components\Track\TrackItem.tsx" />
     <None Remove="ClientApp\components\Track\TrackList.tsx" />
+    <None Remove="ClientApp\tests\app.spec.tsx" />
+    <None Remove="cypress\integration\albumSearch.e2e.ts" />
+    <None Remove="cypress\integration\app.e2e.ts" />
+    <None Remove="cypress\integration\artistSearch.e2e.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,6 +76,9 @@
     <TypeScriptCompile Include="ClientApp\components\Track\TrackItem.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Track\TrackList.tsx" />
     <TypeScriptCompile Include="ClientApp\boot.tsx" />
+    <TypeScriptCompile Include="cypress\integration\albumSearch.e2e.ts" />
+    <TypeScriptCompile Include="cypress\integration\app.e2e.ts" />
+    <TypeScriptCompile Include="cypress\integration\artistSearch.e2e.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

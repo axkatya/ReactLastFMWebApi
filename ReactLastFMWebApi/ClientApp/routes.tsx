@@ -11,5 +11,4 @@ export const routes = <Layout>
   <Route path="/albums" component={AlbumSearch}/>
   <Route path="/artists" component={ArtistSearch} />
   <Route path="/artists(/:artistName)" component={ArtistSearch}/>
-  <Redirect to="/" />
 </Layout>;
