@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceAgent;
+using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace ReactLastFMWebApi
 {
@@ -21,6 +25,26 @@ namespace ReactLastFMWebApi
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+			Info info = new Info
+			{
+				Title = "Last FM API",
+				Version = "v1"
+			};
+
+			info.Description = "Last FM API v1";
+
+			services.AddSwaggerGen(c =>
+			{
+				c.SwaggerDoc("v1", info);
+
+				var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
+				var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+				if (File.Exists(xmlPath))
+				{
+					c.IncludeXmlComments(xmlPath);
+				}
+			});
 
 			services.AddScoped<ILastFmServiceAgent, LastFmServiceAgent>();
 		}
@@ -44,6 +68,13 @@ namespace ReactLastFMWebApi
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
+
+			app.UseSwagger();
+
+			app.UseSwaggerUI(c =>
+			{
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+			});
 
 			app.UseMvc(routes =>
 			{

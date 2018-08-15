@@ -77,5 +77,8 @@
     "test": "jest",
     "postinstall": "typings install",
     "cypress:open": "cypress open"
+  },
+  "dependencies": {
+    "@types/cypress": "^1.1.3"
   }
 }

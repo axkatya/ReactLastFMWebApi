@@ -3,14 +3,26 @@ using System.Diagnostics;
 
 namespace ReactLastFMWebApi.Controllers
 {
+	/// <summary>
+	/// The default controller.
+	/// </summary>
+	/// <seealso cref="Microsoft.AspNetCore.Mvc.Controller" />
 	public class HomeController : Controller
     {
-        public IActionResult Index()
+		/// <summary>
+		/// Indexes this instance.
+		/// </summary>
+		/// <returns></returns>
+		public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Error()
+		/// <summary>
+		/// Errors this instance.
+		/// </summary>
+		/// <returns></returns>
+		public IActionResult Error()
         {
             ViewData["RequestId"] = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
             return View();
